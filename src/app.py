@@ -32,11 +32,13 @@ def sitemap():
 @app.route('/members', methods=['GET'])
 def handle_hello():
     # This is how you can use the Family datastructure by calling its methods
-    members = jackson_family.get_all_members()
-    response_body = {"hello": "world",
-                     "family": members}
-    return jsonify(response_body), 200
+    members = jackson_family.get_all_members(),
+    return jsonify(members), 200
 
+@app.route('/members/<int:member_id>', methods=['GET'])
+def get_member_by_id(member_id):
+    member= next((m for m in jackson_family if m["id"]==member_id), None)
+    return jsonify(jackson_family[member]), 200
 
 
 # This only runs if `$ python src/app.py` is executed
