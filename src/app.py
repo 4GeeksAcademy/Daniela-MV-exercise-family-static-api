@@ -37,8 +37,12 @@ def handle_hello():
 
 @app.route('/members/<int:member_id>', methods=['GET'])
 def get_member_by_id(member_id):
-    member= next((m for m in jackson_family if m["id"]==member_id), None)
-    return jsonify(jackson_family[member]), 200
+    member= jackson_family.get_member(member_id)
+    if member: 
+      return jsonify(member), 200
+    else: 
+      return jsonify({"error": "Miembro no encontrado"}), 404
+
 
 
 # This only runs if `$ python src/app.py` is executed
